@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 import java.sql.Date;
@@ -23,8 +25,13 @@ public class Venta {
     @Column(name = "fecha")
     private Date fecha;
 
-    @OneToMany(mappedBy = "venta")
-    private List<Detalle> detalles;
+    @ManyToMany
+    @JoinTable(
+        name = "detalle_venta",
+        joinColumns = @JoinColumn(name = "venta_id"),
+        inverseJoinColumns = @JoinColumn(name = "producto_id")
+    )
+    private List<Producto> productos;
 
     
     //Getter
@@ -36,8 +43,8 @@ public class Venta {
         return fecha;
     }
 
-    public List<Detalle> getDetalles(){
-        return detalles;
+    public List<Producto> getProductos(){
+        return productos;
     }
     
     //Setter
@@ -49,8 +56,8 @@ public class Venta {
         this.fecha = fecha;
     }
 
-    public void setDetalles(List<Detalle> detalles){
-        this.detalles = detalles;
+    public void setProductos(List<Producto> productos){
+        this.productos = productos;
     }
 
 }

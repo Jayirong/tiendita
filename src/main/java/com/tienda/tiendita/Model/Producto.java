@@ -1,13 +1,10 @@
 package com.tienda.tiendita.Model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,9 +20,6 @@ public class Producto {
 
     @Column(name = "precio")
     private int precio;
-
-    @OneToMany(mappedBy = "producto")
-    private List<Detalle> detalles;
     
     //Getter
     public Long getId(){
@@ -40,10 +34,6 @@ public class Producto {
         return precio;
     }
 
-    public List<Detalle> getDetalles(){
-        return detalles;
-    }
-
     //Setter
     public void setId(Long id){
         this.id = id;
@@ -55,10 +45,6 @@ public class Producto {
 
     public void setPrecio(int precio){
         this.precio = precio;
-    }
-
-    public void setDetalles(List<Detalle> detalles){
-        this.detalles = detalles;
     }
 
 }
