@@ -1,4 +1,4 @@
-package com.tienda.tiendita;
+package com.tienda.tiendita.Controller;
 
 import java.lang.module.ResolutionException;
 import java.time.LocalDate;
@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import com.tienda.tiendita.Model.Producto;
+import com.tienda.tiendita.Model.Venta;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -23,26 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class VentaController {
     //lista de pruebas, lista de productos y ventas, cargamos los productos del tiri
     private List<Producto> productos = Arrays.asList(
-        new Producto(1, "Croquetas Gato", 5000),
-        new Producto(2, "Arena Gato", 8000),
-        new Producto(3, "Juguete Perro", 3500),
-        new Producto(4, "Cama Gato", 10000),
-        new Producto(5, "Comedero Automático", 12000),
-        new Producto(6, "Rascador Gato", 6000),
-        new Producto(7, "Collar Perro", 2500),
-        new Producto(8, "Premios Entrenamiento", 2000),
-        new Producto(9, "Champú Pelo Largo", 3000),
-        new Producto(10, "Juguete Catnip", 1800),
-        new Producto(11, "Correa Perro", 3500),
-        new Producto(12, "Cepillo Gato", 1500),
-        new Producto(13, "Comida Húmeda", 4000),
-        new Producto(14, "Caja Arena Gato", 9000),
-        new Producto(15, "Juguete Cachorro", 2500),
-        new Producto(16, "Caseta Perro", 15000),
-        new Producto(17, "Transportadora Gato", 8000),
-        new Producto(18, "Comida Conejos", 3000),
-        new Producto(19, "Arnés Perro", 4000),
-        new Producto(20, "Snacks Perro", 1500)
+        new Producto(1, "Croquetas Gato", 5000)
     );
     public List<Venta> ventas = new ArrayList<>();
 
@@ -61,94 +46,6 @@ public class VentaController {
         LocalDate fecha1 = LocalDate.of(2022, 6, 14);
         //objeto
         ventas.add(new Venta(1, fecha1, productosVenta1));
-
-        //--V2--
-        //productos
-        List<Producto> productosVenta2 = new ArrayList<>();
-        productosVenta2.add(productos.get(2));
-        productosVenta2.add(productos.get(6));
-        productosVenta2.add(productos.get(7));
-        productosVenta2.add(productos.get(7));
-        //fecha
-        LocalDate fecha2 = LocalDate.of(2022, 6, 18);
-        //objeto
-        ventas.add(new Venta(2, fecha2, productosVenta2));
-        
-        //--V3--
-        //productos
-        List<Producto> productosVenta3 = new ArrayList<>();
-        productosVenta3.add(productos.get(19));
-        productosVenta3.add(productos.get(5));
-        //fecha
-        LocalDate fecha3 = LocalDate.of(2022, 8, 1);
-        //objeto
-        ventas.add(new Venta(3, fecha3, productosVenta3));
-
-        //--V4--
-        //productos
-        List<Producto> productosVenta4 = new ArrayList<>();
-        productosVenta4.add(productos.get(5));
-        productosVenta4.add(productos.get(8));
-        productosVenta4.add(productos.get(15));
-        productosVenta4.add(productos.get(2));
-        productosVenta4.add(productos.get(17));
-        productosVenta4.add(productos.get(12));
-        //fecha
-        LocalDate fecha4 = LocalDate.of(2022, 11, 20);
-        //objeto
-        ventas.add(new Venta(4, fecha4, productosVenta4));
-
-        //--V5--
-        //productos
-        List<Producto> productosVenta5 = new ArrayList<>();
-        productosVenta5.add(productos.get(1));
-        productosVenta5.add(productos.get(14));
-        productosVenta5.add(productos.get(14));
-        productosVenta5.add(productos.get(14));
-        productosVenta5.add(productos.get(18));
-        productosVenta5.add(productos.get(5));
-        productosVenta5.add(productos.get(9));
-        productosVenta5.add(productos.get(3));
-        productosVenta5.add(productos.get(6));
-        productosVenta5.add(productos.get(4));
-        //fecha
-        LocalDate fecha5 = LocalDate.of(2023, 2, 1);
-        //objeto
-        ventas.add(new Venta(5, fecha5, productosVenta5));
-
-        //--V6--
-        //productos
-        List<Producto> productosVenta6 = new ArrayList<>();
-        productosVenta6.add(productos.get(10));
-        productosVenta6.add(productos.get(11));
-        productosVenta6.add(productos.get(16));
-        //fecha
-        LocalDate fecha6 = LocalDate.of(2024, 1, 8);
-        //objeto
-        ventas.add(new Venta(6, fecha6, productosVenta6));
-
-        //--V7--
-        //productos
-        List<Producto> productosVenta7 = new ArrayList<>();
-        productosVenta7.add(productos.get(16));
-        //fecha
-        LocalDate fecha7 = LocalDate.of(2024, 1, 8);
-        //objeto
-        ventas.add(new Venta(7, fecha7, productosVenta7));
-
-        //--V8--
-        //productos
-        List<Producto> productosVenta8 = new ArrayList<>();
-        productosVenta8.add(productos.get(0));
-        productosVenta8.add(productos.get(19));
-        productosVenta8.add(productos.get(19));
-        productosVenta8.add(productos.get(19));
-        productosVenta8.add(productos.get(19));
-        productosVenta8.add(productos.get(19));
-        //fecha
-        LocalDate fecha8 = LocalDate.of(2024, 3, 21);
-        //objeto
-        ventas.add(new Venta(8, fecha8, productosVenta8));
     }
 
     //mostramos productos en venta

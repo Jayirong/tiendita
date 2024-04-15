@@ -1,4 +1,4 @@
-package com.tienda.tiendita;
+package com.tienda.tiendita.Model;
 
 import java.util.List;
 import java.time.LocalDate;
