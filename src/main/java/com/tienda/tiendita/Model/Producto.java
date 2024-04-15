@@ -1,25 +1,64 @@
 package com.tienda.tiendita.Model;
 
-public class Producto {
-    private int id;
-    private String nombre;
-    private int precio;
-    
-    public Producto(int id, String nombre, int precio){
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-    }
+import java.util.List;
 
-    public int getIdProd(){
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "producto")
+public class Producto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "nombre")
+    private String nombre;
+
+    @Column(name = "precio")
+    private int precio;
+
+    @OneToMany(mappedBy = "producto")
+    private List<Detalle> detalles;
+    
+    //Getter
+    public Long getId(){
         return id;
     }
 
-    public String getNombreProd(){
+    public String getNombre(){
         return nombre;
     }
 
-    public int getPrecioProd(){
+    public int getPrecio(){
         return precio;
     }
+
+    public List<Detalle> getDetalles(){
+        return detalles;
+    }
+
+    //Setter
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public void setNombre(String nombre){
+        this.nombre = nombre;
+    }
+
+    public void setPrecio(int precio){
+        this.precio = precio;
+    }
+
+    public void setDetalles(List<Detalle> detalles){
+        this.detalles = detalles;
+    }
+
 }

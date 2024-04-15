@@ -1,29 +1,56 @@
 package com.tienda.tiendita.Model;
 
 import java.util.List;
-import java.time.LocalDate;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+import java.sql.Date;
+
+@Entity
+@Table(name = "venta")
 public class Venta {
-    private int id;
-    private LocalDate fecha;
-    private List<Producto> productos;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-    public Venta(int id, LocalDate fecha, List<Producto> productos){
-        this.id = id;
-        this.fecha = fecha;
-        this.productos = productos;
-    }
+    @Column(name = "fecha")
+    private Date fecha;
 
-    public int getIdVenta(){
+    @OneToMany(mappedBy = "venta")
+    private List<Detalle> detalles;
+
+    
+    //Getter
+    public Long getId(){
         return id;
     }
 
-    public LocalDate getFechaVenta(){
+    public Date getFecha(){
         return fecha;
     }
 
-    public List<Producto> getProductosVenta(){
-        return productos;
+    public List<Detalle> getDetalles(){
+        return detalles;
     }
     
+    //Setter
+    public void setId(Long id){
+        this.id = id;
+    }
+
+    public void setFecha(Date fecha){
+        this.fecha = fecha;
+    }
+
+    public void setDetalles(List<Detalle> detalles){
+        this.detalles = detalles;
+    }
+
 }
