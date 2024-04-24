@@ -1,6 +1,8 @@
 package com.tienda.tiendita.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +23,21 @@ import java.util.Optional;
 @RequestMapping("/ventas")
 public class VentaController {
     
+    //Comentario loco: aparentemente HATEOAS es implementado en su mayoria, por no decir unicamente, en los controladores, netamente por el concepto de facilitar el acceso a la informacion al usuario
+
     @Autowired
     private VentaService ventaService;
 
     //C
     @PostMapping
-    public Venta createVenta(@RequestBody Venta venta) {
-        return ventaService.createVenta(venta);
+    public EntityModel<Venta> createVenta(@RequestBody Venta venta) {
+        Venta createdVenta = ventaService.createVenta(venta);
+        return EntityModel.of(createdVenta,
+                    WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentaById(createdVenta.getId())).withSelfRel(),
+                    WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentas()).withRel("all-ventas"));
     }
+
+    //---> FALTA HATEOAS DE AKI PABAJO <---
 
     //R All
     @GetMapping

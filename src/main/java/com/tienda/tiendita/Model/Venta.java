@@ -2,6 +2,8 @@ package com.tienda.tiendita.Model;
 
 import java.util.List;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +18,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "venta")
-public class Venta {
+public class Venta extends RepresentationModel<Venta>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
