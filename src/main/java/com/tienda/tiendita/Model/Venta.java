@@ -14,7 +14,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "venta")
@@ -25,7 +25,7 @@ public class Venta extends RepresentationModel<Venta>{
     private Long id;
 
     @Column(name = "fecha")
-    private Date fecha;
+    private LocalDate fecha;
 
     @ManyToMany
     @JoinTable(
@@ -41,7 +41,7 @@ public class Venta extends RepresentationModel<Venta>{
         return id;
     }
 
-    public Date getFecha(){
+    public LocalDate getFecha(){
         return fecha;
     }
 
@@ -54,7 +54,7 @@ public class Venta extends RepresentationModel<Venta>{
         this.id = id;
     }
 
-    public void setFecha(Date fecha){
+    public void setFecha(LocalDate fecha){
         this.fecha = fecha;
     }
 
