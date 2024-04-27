@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.swing.text.html.parser.Entity;
-
 @RestController
 @RequestMapping("/ventas")
 public class VentaController {
