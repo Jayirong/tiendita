@@ -1,6 +1,7 @@
 package com.tienda.tiendita.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,9 @@ import com.tienda.tiendita.Model.Producto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.swing.text.html.parser.Entity;
 
 @RestController
 @RequestMapping("/ventas")
@@ -37,25 +41,46 @@ public class VentaController {
                     WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentas()).withRel("all-ventas"));
     }
 
-    //---> FALTA HATEOAS DE AKI PABAJO <---
-
     //R All
     @GetMapping
-    public List<Venta> getVentas() {
-        return ventaService.getVentas();
+    public CollectionModel<EntityModel<Venta>> getVentas() {
+        List<Venta> ventas = ventaService.getVentas();
+        
+        List<EntityModel<Venta>> ventaResources = ventas.stream()
+                        .map(venta -> EntityModel.of(venta, 
+                                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentaById(venta.getId())).withSelfRel()
+                            ))
+                        .collect(Collectors.toList());
+
+        WebMvcLinkBuilder linkTo = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentas());
+        CollectionModel<EntityModel<Venta>> resources = CollectionModel.of(ventaResources, linkTo.withRel("ventas"));
+        return resources;
     }
 
     //R Id
     @GetMapping("/{id}")
-    public Optional<Venta> getVentaById(@PathVariable Long id) {
-        return ventaService.getVentaById(id);
+    public EntityModel<Venta> getVentaById(@PathVariable Long id){
+        Optional<Venta> venta = ventaService.getVentaById(id);
+
+        if (venta.isPresent()){
+            return EntityModel.of(venta.get(),
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentaById(id)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentas()).withRel("All-Ventas"));
+        } else {
+            throw new VentaNotFoundException("Venta no encontrada, no esssiste una venta con id "+id);
+        }
+
     }
 
     //U
     @PutMapping("/{id}")
-    public Venta updateVenta(@PathVariable Long id, @RequestBody Venta venta) {
-        return ventaService.updateVenta(id, venta);
+    public EntityModel<Venta> updateVenta(@PathVariable Long id, @RequestBody Venta venta) {
+        Venta updatedVenta = ventaService.updateVenta(id, venta);
+        return EntityModel.of(updatedVenta,
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentaById(id)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getVentas()).withRel("All-Ventas"));
     }
+
 
     //D
     @DeleteMapping("/{id}")
@@ -63,12 +88,15 @@ public class VentaController {
         ventaService.deleteVenta(id);
     }
 
+    //fALTA HATEOAS DE AKI PABAJO
+
     //U Productos en venta
     @PostMapping("/{ventaId}/productos/{productoId}")
     public Venta addProductoToVenta(@PathVariable Long ventaId, @PathVariable Long productoId) {
         return ventaService.addProductoToVenta(ventaId, productoId);
     }
-
+    
+    
     //R productos por venta
     @GetMapping("/{ventaId}/productos")
     public List<Producto> getProductosByVenta(@PathVariable Long ventaId) {
