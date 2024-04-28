@@ -9,5 +9,5 @@ services:
     environment:
       - spring.datasource.url=jdbc:oracle:thin@fstack_tp?TNS _ADMIN=/app/wallet_fstack/
       - SPRING.DATASOURCE.USERNAME=TienditaUser
-      - SPRING.DATASOURCE.USERNAME=OracleCloud123
+      - SPRING.DATASOURCE.PASSWORD=OracleCloud123
     restart: always
